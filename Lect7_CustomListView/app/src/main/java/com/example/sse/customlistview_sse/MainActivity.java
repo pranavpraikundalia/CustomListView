@@ -8,6 +8,7 @@ import android.media.Rating;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private
     ListView lvEpisodes;
     ListAdapter lvAdapter;
+    Intent intent;
     //Reference to the listview GUI component
   //Reference to the Adapter used to populate the listview.
 
@@ -67,12 +69,33 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.mnu_zero) {
-            Toast.makeText(getBaseContext(), "Menu Zero.", Toast.LENGTH_LONG).show();
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("http://shop.startrek.com/info.php"));
+            startActivity(intent);
             return true;
         }
 
         if (id == R.id.mnu_one) {
-            Toast.makeText(getBaseContext(), "Ring ring, Hi Mom.", Toast.LENGTH_LONG).show();
+            intent = new Intent(Intent.ACTION_DIAL,
+                    Uri.parse("tel: 1-800-startrk"));
+            startActivity(intent);
+            return true;
+        }
+
+        if(id==R.id.mnu_two){
+            //SmsManager.getDefault().sendTextMessage("1234567890", null, "Ouch!", null, null);
+            intent=new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", "", null));
+            intent.putExtra("sms_body","Ouch!");
+            startActivity(intent);
+            return true;
+        }
+
+        if(id==R.id.mnu_three){
+
+            return true;
+        }
+
+        if(id==R.id.mnu_four){
             return true;
         }
 
