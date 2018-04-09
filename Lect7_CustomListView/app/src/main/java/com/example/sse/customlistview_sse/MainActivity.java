@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.media.Rating;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -26,6 +29,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,11 +95,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(id==R.id.mnu_three){
+            MediaPlayer mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.livelong);
+            //String movieUrl = "android.resource://com.example.sse.customlistview_sse/raw/livelongandp.mp4";
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    mediaPlayer.release();
+                    mediaPlayer=null;
+                }
+            });
 
             return true;
         }
 
         if(id==R.id.mnu_four){
+            //String audiourl = Environment.getExternalStorageDirectory() + "/raw/livelongandp.mp4";
+
+            //Intent tostart = new Intent(Intent.ACTION_VIEW);
+            MediaPlayer mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.livelongandp);
+            //String movieUrl = "android.resource://com.example.sse.customlistview_sse/raw/livelongandp.mp4";
+            mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    mediaPlayer.release();
+                    mediaPlayer=null;
+                }
+            });
+
             return true;
         }
 
