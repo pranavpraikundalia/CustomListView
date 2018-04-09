@@ -28,6 +28,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lvEpisodes;
     ListAdapter lvAdapter;
     Intent intent;
+    VideoView videoView;
     //Reference to the listview GUI component
   //Reference to the Adapter used to populate the listview.
 
@@ -53,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         lvEpisodes = (ListView)findViewById(R.id.lvEpisodes);
         lvAdapter = new MyCustomAdapter(this.getBaseContext());  //instead of passing the boring default string adapter, let's pass our own, see class MyCustomAdapter below!
         lvEpisodes.setAdapter(lvAdapter);
+        videoView= (VideoView) findViewById(R.id.vvVideo);
+        videoView.setVisibility(View.INVISIBLE);
+
 
 
 
@@ -113,7 +118,15 @@ public class MainActivity extends AppCompatActivity {
             //String audiourl = Environment.getExternalStorageDirectory() + "/raw/livelongandp.mp4";
 
             //Intent tostart = new Intent(Intent.ACTION_VIEW);
-            MediaPlayer mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.livelongandp);
+            //lvEpisodes.setVisibility(View.INVISIBLE);
+
+
+
+            videoView.setVisibility(View.VISIBLE);
+            String path = "android.resource://" + getPackageName() + "/" + R.raw.livelongandp;
+            videoView.setVideoURI(Uri.parse(path));
+            videoView.start();
+            /*MediaPlayer mediaPlayer= MediaPlayer.create(getApplicationContext(),R.raw.livelongandp);
             //String movieUrl = "android.resource://com.example.sse.customlistview_sse/raw/livelongandp.mp4";
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -122,8 +135,14 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.release();
                     mediaPlayer=null;
                 }
+            });*/
+            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    videoView.setVisibility(View.INVISIBLE);
+                }
             });
-
+            //videoView.setVisibility(View.INVISIBLE);
             return true;
         }
 
